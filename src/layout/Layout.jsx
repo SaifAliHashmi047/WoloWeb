@@ -6,25 +6,33 @@ import backgroundImage from "./../assets/bckg1.jpg"; // Replace with your image 
 
 const Layout = () => {
   return (
-    <main className="grid min-h-full grid-rows-[auto_1fr_auto]">
-      <Navbar />
-      <section className="container mx-auto relative z-10">
-        <div
-          className="fixed inset-0 w-full h-full -z-20 blur-sm"
-          style={{
-            backgroundImage: `url(${backgroundImage})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        ></div>
+    <main className="relative min-h-screen flex flex-col">
+      {/* Background Image */}
+      <div
+        className="fixed inset-0 -z-10 blur-sm"
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: "cover", // Or "contain" based on your preference
+          backgroundPosition: "center",
+        }}
+      ></div>
 
-        <div className="h-full overflow-y-auto no-scrollbar">
+      {/* Fixed Navbar */}
+      <header className="sticky top-0 z-50">
+        <Navbar />
+      </header>
+
+      {/* Scrollable Content */}
+      <section className="flex-grow overflow-y-auto">
+        <div className="container mx-auto px-4 md:px-8 lg:px-12">
           <Outlet />
         </div>
-
-        {/* <ToastContainer /> */}
       </section>
-      <Footer />
+
+      {/* Fixed Footer */}
+      <footer className="sticky bottom-0 z-50">
+        <Footer />
+      </footer>
     </main>
   );
 };

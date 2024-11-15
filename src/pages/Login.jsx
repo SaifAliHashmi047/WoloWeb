@@ -106,7 +106,7 @@ const Login = () => {
             placeholder="Email"
             name="email"
             onChange={handleChange}
-            className="w-full p-4 border rounded-full focus:outline-none"
+            className="w-full p-3 border rounded-full focus:outline-none"
             style={{
               borderColor: colors.lightGrey,
               color: colors.darkBlack,
