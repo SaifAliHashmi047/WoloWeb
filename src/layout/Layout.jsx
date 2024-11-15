@@ -23,8 +23,8 @@ const Layout = () => {
       </header>
 
       {/* Scrollable Content */}
-      <section className="flex-grow overflow-y-auto">
-        <div className="container mx-auto px-4 md:px-8 lg:px-12">
+      <section className="flex flex-grow overflow-y-auto justify-end items-end">
+        <div className="container mx-auto px-4 flex  md:px-8 lg:px-12">
           <Outlet />
         </div>
       </section>
