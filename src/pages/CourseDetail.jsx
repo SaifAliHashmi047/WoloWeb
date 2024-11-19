@@ -67,7 +67,7 @@ const CourseDetail = () => {
   return (
     <>
       {!isLoading ? (
-        <div className="container mx-auto lg:mx-36 p-4 w-fit mt-10 min-h-fit flex flex-col items-center bg-white rounded-t-2xl pb-24">
+        <div className="container w-full mx-auto p-4 mt-10 min-h-fit flex flex-col items-center bg-white rounded-t-2xl pb-24">
           <img src={course?.image} className="w-full h-80 object-fit" />
           <h1 className="text-4xl font-bold text-center my-2">
             {course?.title}
