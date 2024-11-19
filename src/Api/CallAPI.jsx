@@ -18,12 +18,15 @@ export const Status = {
   DELETE: 204,
 };
 
-export const callApi = async (url, method, data) => {
+export const callApi = async (url, method, data, formData) => {
   const accessToken = JSON.parse(localStorage?.getItem("accessToken"));
   console?.log("----------------------------------------_>", accessToken);
   const headers = { Accept: "application/json" };
   if (accessToken) {
     headers["Authorization"] = accessToken;
+  }
+  if (formData) {
+    headers["Content-Type"] = "multipart/form-data";
   }
   try {
     console.log("accessToken => ", accessToken);

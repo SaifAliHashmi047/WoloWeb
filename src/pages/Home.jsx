@@ -35,7 +35,7 @@ const Home = () => {
         </Card>
         <Card
           onClick={() => {
-            console?.log("-------->");
+            navigation("/addCourse");
           }}
           title="Add a Course"
         >

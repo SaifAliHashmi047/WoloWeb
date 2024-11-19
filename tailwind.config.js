@@ -18,6 +18,7 @@ export default {
       primary: "#060062",
       extraLightGrey: "#F5F5F5",
       sky: "#E1E4E8",
+      red: '#FF0000',
     },
   },
   plugins: [],

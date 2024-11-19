@@ -168,15 +168,22 @@ const CourseDetail = () => {
                       {item?.title}
                     </p>
                     {item?.lectures.map((item) => (
-                      <div className=" my-8  w-full space-y-4  rounded-md">
-                        <CollapseView
-                          className=" bg-secondary "
-                          title={item?.title}
-                          notifyParent={(val) => {
-                            console?.log("------------_-_--__-___-----_>"),
-                              setChildrenUpdate(!val);
-                          }}
+                      <div
+                        onClick={() => {
+                          setChildrenUpdate(!childrenUpdate);
+                          setChildrenUpdate(!childrenUpdate);
+                        }}
+                        className=" my-8  w-full space-y-4  rounded-md "
+                      >
+                        <div
+                          key={item._id}
+                          className="my-8 w-full space-y-4 rounded-md"
                         >
+                          <div className="bg-secondary p-2 rounded-md">
+                            <p className="text-white font-bold">
+                              {item.title || "Untitled"}
+                            </p>
+                          </div>
                           <div className="flex flex-col w-full">
                             <div className="flex flex-row justify-between my-2">
                               <p className=" w-1/2 font-bold">Title </p>
@@ -231,7 +238,7 @@ const CourseDetail = () => {
                               </div>
                             </div>
                           </div>
-                        </CollapseView>
+                        </div>
                       </div>
                     ))}
                   </div>

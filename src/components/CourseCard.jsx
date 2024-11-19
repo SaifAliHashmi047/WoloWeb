@@ -8,7 +8,7 @@ const CourseCard = ({ title, children, onClick }) => {
     >
       {children}
       <h2 className="flex text-lg font-semibold my-2 text-white line-clamp-1 mx-4 h-16">
-        {title} {title}
+        {title}
       </h2>
     </div>
   );

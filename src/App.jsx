@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ViewCourse from "./pages/ViewCourse";
 import CourseDetail from "./pages/CourseDetail";
+import AddCourse from "./pages/AddCourse";
 
 export const route = [
   {
@@ -26,6 +27,10 @@ export const route = [
       {
         path: "/course/:courseId",
         element: <CourseDetail />,
+      },
+      {
+        path: "/addCourse",
+        element: <AddCourse />,
       },
     ],
   },

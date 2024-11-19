@@ -95,4 +95,5 @@ export const api = {
   //course checkout
   checkoutCourse: "api/v1/course/purchasecourse/web/checkout",
   getMyCourses: "api/v1/course/getMyCourses/",
+  fileUpload: "api/v1/user/upload",
 };
