@@ -47,9 +47,21 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e?.preventDefault();
 
+    // Basic validation
+    if (!form.email) {
+      return alert("Email is required!");
+    }
+    if (!/\S+@\S+\.\S+/.test(form.email)) {
+      return alert("Please enter a valid email address!");
+    }
+    if (!form.password) {
+      return alert("Password is required!");
+    }
+
     try {
       setLoadingLocal(true);
       const response = await postLogin(form.email, form.password, "Tutor");
+
       if (response !== undefined) {
         if (response?.status === 201 || response?.status === 200) {
           dispatch(setUserData(response?.data?.user));
@@ -64,10 +76,14 @@ const Login = () => {
             JSON.stringify(response?.data?.token)
           );
           navigate("/");
+        } else {
+          if (response?.errorType == "wrong-password") {
+            alert("Incorrect email or password");
+          }
         }
       }
     } catch (error) {
-      console.log(error);
+      console.log("Login Error:", error);
       setLoadingLocal(false);
     } finally {
       setLoadingLocal(false);

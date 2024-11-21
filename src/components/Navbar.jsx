@@ -1,11 +1,11 @@
-// src/components/Navbar.jsx
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import colors from "../colors";
-import { store } from "../redux/store";
+import { BiLeftArrowAlt } from "react-icons/bi";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = () => {
     localStorage.removeItem("userLoggedIN");
@@ -13,12 +13,26 @@ const Navbar = () => {
     localStorage.removeItem("accessToken");
     navigate("/login");
   };
+
+  // Define routes where the back arrow should not appear
+  const noBackArrowRoutes = ["/", "/login"];
+
   return (
     <nav
       className="flex h-16 p-4 text-white z-20"
       style={{ backgroundColor: colors.primary }}
     >
-      <div className="container mx-auto flex justify-between items-cente">
+      <div className="justify-center align-middle items-center self-center w-8 overflow-hidden">
+        {!noBackArrowRoutes.includes(location.pathname) && (
+          <BiLeftArrowAlt
+            size={30}
+            color="white"
+            onClick={() => navigate(-1)}
+          />
+        )}
+      </div>
+
+      <div className="container mx-auto flex justify-between items-center">
         <Link to="/" className="text-3xl font-bold">
           Wolo
         </Link>
@@ -26,7 +40,7 @@ const Navbar = () => {
           {localStorage?.getItem("userLoggedIN") ? (
             <button
               onClick={handleLogout}
-              className=" bg-secondary text-white px-6 py-2 rounded-lg mx-2"
+              className="bg-secondary text-white px-6 py-2 rounded-lg mx-2"
             >
               Logout
             </button>

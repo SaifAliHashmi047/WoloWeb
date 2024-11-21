@@ -70,7 +70,7 @@ const AddSessions = ({ setCourse, onError, onSuccess }) => {
       ];
       // console.log("Resources saved:", sessions);
       setCourse(saveSession);
-      onSuccess("Resources saved successfully");
+      onSuccess("Sessions saved successfully");
     }
   };
 

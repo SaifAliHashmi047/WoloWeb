@@ -85,6 +85,7 @@ const AddMudulesCollapse = ({ setCourse, onError, onSuccess }) => {
   };
 
   const deleteModule = (index) => {
+    setChildrenUpdate(!childrenUpdate);
     setModules((prev) => prev.filter((_, i) => i !== index));
   };
 

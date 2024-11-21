@@ -49,8 +49,16 @@ const AddQuizModal = ({ lecture, isOpen, onClose, onSave }: any) => {
 
   return (
     isOpen && (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 flex-col">
         <div className="bg-white p-6 rounded-md w-1/2 max-h-[90%] overflow-y-auto space-y-4 my-20">
+          <div className=" flex justify-end z-50">
+            <button
+              onClick={() => onClose()}
+              className=" right-4 justify-items-end  text-white rounded-full bg-grey py-1 px-2 hover:bg-gray-300 mx-2"
+            >
+              ✖
+            </button>
+          </div>
           <h2 className="text-xl font-bold">Add Quiz for {lecture?.title}</h2>
 
           <div>
@@ -94,7 +102,7 @@ const AddQuizModal = ({ lecture, isOpen, onClose, onSave }: any) => {
 
           <button
             onClick={addOption}
-            className="bg-gray-300 text-black px-4 py-2 rounded-md"
+            className=" bg-secondary text-white px-4 py-2 rounded-md"
           >
             Add Option
           </button>

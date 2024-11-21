@@ -104,7 +104,7 @@ const CourseDetail = () => {
                   <p className=" w-1/2">{course?.price}</p>
                 </div>
                 <div className="flex flex-row justify-between my-2">
-                  <p className=" w-1/2 font-bold"> Descriptipon </p>
+                  <p className=" w-1/2 font-bold"> Description </p>
                   <p className=" w-1/2">{course?.description}</p>
                 </div>
 
@@ -162,11 +162,23 @@ const CourseDetail = () => {
               childrenUpdate={!childrenUpdate}
             >
               <div className="flex flex-col w-full">
-                {course?.modules.map((item) => (
+                {course?.modules.map((item, index) => (
                   <div className=" py-2">
                     <p className=" font-bold text-xl text-primary my-2 justify-self-center self-center">
-                      {item?.title}
+                      Module {index + 1} : {item?.title}
                     </p>
+                    {/* <div className="flex flex-row justify-between my-2">
+                      <p className=" w-1/2 font-bold">No of Lectures </p>
+                      <p className=" w-1/2">{item?.lectures?.length}</p>
+                    </div> */}
+                    <div className="flex flex-row justify-between my-2">
+                      <p className=" w-1/2 font-bold">Total Module Time </p>
+                      <p className=" w-1/2">{item?.VideosLength}</p>
+                    </div>
+                    <div className="flex flex-row justify-between my-2">
+                      <p className=" w-1/2 font-bold">Total Lectures</p>
+                      <p className=" w-1/2">{item?.totalLectures}</p>
+                    </div>
                     {item?.lectures.map((item) => (
                       <div
                         onClick={() => {
@@ -181,7 +193,7 @@ const CourseDetail = () => {
                         >
                           <div className="bg-secondary p-2 rounded-md">
                             <p className="text-white font-bold">
-                              {item.title || "Untitled"}
+                              Lecture {index + 1} : {item.title || "Untitled"}
                             </p>
                           </div>
                           <div className="flex flex-col w-full">
@@ -204,7 +216,7 @@ const CourseDetail = () => {
                                 <div className="flex flex-row justify-between my-2">
                                   <p className=" w-1/2 font-bold">Quiz </p>
                                   <div className="w-1/2 flex gap-2 flex-wrap">
-                                    {item?.quiz?.map((txt) => (
+                                    {item?.quiz?.map((txt, index) => (
                                       <p
                                         onClick={() => {
                                           setQuizData(txt);
@@ -212,8 +224,7 @@ const CourseDetail = () => {
                                         }}
                                         className=" bg-secondary text-wrap rounded-md px-2 text-white"
                                       >
-                                        {" "}
-                                        {txt?.question} ?
+                                        Q{index + 1} : {txt?.question}
                                       </p>
                                     ))}
                                   </div>
@@ -309,25 +320,27 @@ const CourseDetail = () => {
           </div>
           {openModal && (
             <Modal onClose={() => setOpenModal(false)}>
-              <div className="flex flex-col w-full">
-                <p className=" text-black  py-2 rounded-lg mx-2 text-lg self-start font-bold">
-                  Q : {quizData?.question}
+              <div className="flex flex-col w-full mt-8">
+                <p className="text-black py-2 rounded-lg mx-2 text-lg self-start font-bold">
+                  Q: {quizData?.question}
                 </p>
 
-                {quizData?.options?.map((txt) => (
-                  <p className=" bg-secondary text-wrap rounded-md px-2 text-white my-2  text-center">
-                    {" "}
+                {quizData?.options?.map((txt, index) => (
+                  <p
+                    key={index}
+                    className="bg-secondary text-wrap rounded-md px-2 text-white my-2 text-center"
+                  >
                     {txt.toUpperCase()}
                   </p>
                 ))}
-              </div>
-              <p className=" text-black  py-2 rounded-lg mx-2 text-md self-start font-bold mt-10">
-                Correct Answer :
-              </p>
 
-              <p className=" bg-primary text-wrap rounded-md px-2 text-white py-2 font-bold text-center">
-                {quizData?.correctAnswer.toUpperCase()}
-              </p>
+                <p className="text-black py-2 rounded-lg mx-2 text-md self-start font-bold mt-10">
+                  Correct Answer:
+                </p>
+                <p className="bg-primary text-wrap rounded-md px-2 text-white py-2 font-bold text-center">
+                  {quizData?.correctAnswer.toUpperCase()}
+                </p>
+              </div>
             </Modal>
           )}
         </div>

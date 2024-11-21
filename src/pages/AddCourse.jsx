@@ -311,16 +311,19 @@ const AddCourse = () => {
                       <span
                         key={index}
                         className="  bg-secondary  text-white px-2 py-1 rounded-md flex items-center gap-2 cursor-pointer mx-2"
-                        onClick={() => {
-                          // Remove the clicked tag
-                          setCourseData((prev) => ({
-                            ...prev,
-                            tag: prev.tags.filter((_, i) => i !== index),
-                          }));
-                        }}
                       >
                         {tag}
-                        <span className="font-bold m-x-1">×</span>
+                        <span
+                          onClick={() =>
+                            setCourseData((prev) => ({
+                              ...prev,
+                              tags: prev.tags.filter((_, i) => i !== index),
+                            }))
+                          }
+                          className="font-bold m-x-1"
+                        >
+                          ×
+                        </span>
                       </span>
                     ))}
                   </div>
