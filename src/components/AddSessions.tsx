@@ -31,7 +31,7 @@ const AddSessions = ({ setCourse, onError, onSuccess }) => {
     //@ts-ignore
     const hasError = sessions.some((session) => {
       if (!session.title) {
-        onError("Please enter a valid Meeting Title");
+        onError("Please enter a valid Title");
         return true;
       }
       if (!session.date) {
@@ -39,19 +39,19 @@ const AddSessions = ({ setCourse, onError, onSuccess }) => {
         return true;
       }
       if (!session.startTime) {
-        onError("Please enter a valid Meeting Start Time");
+        onError("Please enter a valid Start Time");
         return true;
       }
       if (!session.endTime) {
-        onError("Please enter a valid Meeting End Time");
+        onError("Please enter a valid End Time");
         return true;
       }
       if (!session.meetingUrl) {
-        onError("Please enter a valid Meeting Meeting url");
+        onError("Please enter a valid Meeting url");
         return true;
       }
       if (!meetingURLPattern.test(session.meetingUrl)) {
-        onError("Please enter a valid Meeting Meeting url");
+        onError("Please enter a valid Meeting url");
         return true; // Return false if any lecture video URL is not valid
       }
     });
@@ -59,17 +59,24 @@ const AddSessions = ({ setCourse, onError, onSuccess }) => {
     if (hasError) {
       // alert("Please fill all fields");
     } else {
-      const a = sessions[0];
-      const saveSession = [
-        {
-          title: a.title,
-          starttime: moment().toISOString(a.startTime),
-          endtime: moment().toISOString(a.endTime),
-          link: a.meetingUrl,
-        },
-      ];
-      // console.log("Resources saved:", sessions);
-      setCourse(saveSession);
+      const saveSessions = sessions.map((session) => {
+        // Combine date and time into ISO 8601 format
+        const startDateTime = moment(
+          `${session.date}T${session.startTime}`
+        ).toISOString();
+        const endDateTime = moment(
+          `${session.date}T${session.endTime}`
+        ).toISOString();
+
+        return {
+          title: session.title,
+          starttime: startDateTime,
+          endtime: endDateTime,
+          link: session.meetingUrl,
+        };
+      });
+      console.log("---------->>>>>", saveSessions);
+      setCourse(saveSessions);
       onSuccess("Sessions saved successfully");
     }
   };

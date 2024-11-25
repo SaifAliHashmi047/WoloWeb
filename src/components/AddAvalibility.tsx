@@ -9,11 +9,11 @@ const AddAvalibility = ({ setAgora, onError, onSuccess }) => {
     //@ts-ignore
 
     if (startTime.length < 2) {
-      onError("Please select a your avalibility Start time");
+      onError("Please select a your availability Start time");
       return;
     }
     if (endTime.length < 2) {
-      onError("Please select a your avalibility End time");
+      onError("Please select a your availability End time");
       return;
     }
     const startTimeString = moment().toISOString(startTime);
@@ -24,13 +24,13 @@ const AddAvalibility = ({ setAgora, onError, onSuccess }) => {
       endTime: endTimeString,
     };
     setAgora(agoraSessions);
-    onSuccess("Avalibility Saved Successfully");
+    onSuccess("Availability Saved Successfully");
     console?.log("------------------_>", agoraSessions);
   };
 
   return (
     //@ts-ignore
-    <CollapseView className="" title={"Avalibility"}>
+    <CollapseView className="" title={"Availability"}>
       <div className="flex flex-col w-full">
         <div className="mb-4">
           <div className="flex flex-row justify-between my-2">

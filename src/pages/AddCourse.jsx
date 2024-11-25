@@ -20,7 +20,7 @@ const AddCourse = () => {
     modules: [],
     sessions: [],
     resources: [],
-    agoraSession: null,
+    agoraSessions: null,
   });
   const [isLoading, setIsLoading] = useState(false);
   const [imageFile, setImageFile] = useState("");
@@ -211,9 +211,9 @@ const AddCourse = () => {
       });
       return false;
     }
-    if (course?.agoraSession == null) {
+    if (course?.agoraSessions == null) {
       setFlash({
-        message: "Please save your availibilty to proceed ",
+        message: "Please save your availability to proceed ",
         type: "error",
       });
       return false;
@@ -226,7 +226,7 @@ const AddCourse = () => {
       if (response?.status === 201 || response?.status === 200) {
         if (response?.success) {
           setFlash({
-            message: "Course uploaded successfully",
+            message: "Course created successfully",
             type: "success",
           });
           navigation(-1);
@@ -246,7 +246,7 @@ const AddCourse = () => {
       modules: course?.modules,
       resources: course?.resources ? course?.resources : [],
       sessions: course?.sessions ? course?.sessions : [],
-      agoraSession: course?.agoraSession ? course?.agoraSession : {},
+      agoraSessions: course?.agoraSessions ? course?.agoraSessions : {},
     };
     console.log("Create Body => ", JSON?.stringify(createCourseData, " ", 2));
     const response = await callApi(api?.createCourse, "POST", createCourseData);
@@ -513,7 +513,7 @@ const AddCourse = () => {
             setAgora={(val) => {
               setCourse((prev) => ({
                 ...prev,
-                agoraSession: val,
+                agoraSessions: val,
               }));
 
               console?.log("------------->", course);
