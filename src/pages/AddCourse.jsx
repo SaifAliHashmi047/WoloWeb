@@ -202,6 +202,7 @@ const AddCourse = () => {
         message: "Please save course basic details to proceed ",
         type: "error",
       });
+      setIsLoading(false);
       return false;
     }
     if (course?.modules.length < 1) {
@@ -209,6 +210,7 @@ const AddCourse = () => {
         message: "Please save course modules to proceed ",
         type: "error",
       });
+      setIsLoading(false);
       return false;
     }
     if (course?.agoraSessions == null) {
@@ -216,6 +218,7 @@ const AddCourse = () => {
         message: "Please save your availability to proceed ",
         type: "error",
       });
+      setIsLoading(false);
       return false;
     }
 
