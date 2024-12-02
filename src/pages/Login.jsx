@@ -66,6 +66,11 @@ const Login = () => {
         if (response?.status === 201 || response?.status === 200) {
           dispatch(setUserData(response?.data?.user));
           dispatch(setUserLogin(true));
+
+          console?.log(
+            "-------_-__-_--_---------->",
+            JSON?.stringify(response?.data?.refreshToken, null, 2)
+          );
           localStorage.setItem("userLoggedIN", true);
           localStorage.setItem(
             "userData",
@@ -75,6 +80,11 @@ const Login = () => {
             "accessToken",
             JSON.stringify(response?.data?.token)
           );
+          localStorage.setItem(
+            "refreshToken",
+            JSON.stringify(response?.data?.refreshToken)
+          );
+
           navigate("/");
         } else {
           if (response?.errorType == "wrong-password") {
