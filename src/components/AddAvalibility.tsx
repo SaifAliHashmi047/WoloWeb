@@ -16,16 +16,24 @@ const AddAvalibility = ({ setAgora, onError, onSuccess }) => {
       onError("Please select a your availability End time");
       return;
     }
-    const startTimeString = moment().toISOString(startTime);
-    //@ts-ignore
-    const endTimeString = moment().toISOString(endTime);
+    const now = moment();
+    // console.log("------------------_>1234565432", startTime);
+    const startTimeString = moment(
+      `${now.format("YYYY-MM-DD")} ${startTime}`,
+      "YYYY-MM-DD HH:mm"
+    ).toISOString();
+    const endTimeString = moment(
+      `${now.format("YYYY-MM-DD")} ${endTime}`,
+      "YYYY-MM-DD HH:mm"
+    ).toISOString();
+
     const agoraSessions = {
       startTime: startTimeString,
       endTime: endTimeString,
     };
     setAgora(agoraSessions);
     onSuccess("Availability Saved Successfully");
-    console?.log("------------------_>", agoraSessions);
+    console.log("------------------_>1234565432", agoraSessions);
   };
 
   return (

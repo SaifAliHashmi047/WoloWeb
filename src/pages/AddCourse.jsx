@@ -236,7 +236,7 @@ const AddCourse = () => {
         }
       } else {
         setFlash({
-          message: "Something went wrong please try again",
+          message: "Session expired please login again",
           type: "error",
         });
       }
@@ -249,9 +249,12 @@ const AddCourse = () => {
       modules: course?.modules,
       resources: course?.resources ? course?.resources : [],
       sessions: course?.sessions ? course?.sessions : [],
-      agoraSessions: course?.agoraSessions ? course?.agoraSessions : {},
+      agoraSession: course?.agoraSessions ? course?.agoraSessions : {},
     };
-    console.log("Create Body => ", JSON?.stringify(createCourseData, " ", 2));
+    console.log(
+      "Create Body 1234212343232123 => ",
+      JSON?.stringify(createCourseData, " ", 2)
+    );
     const response = await callApi(api?.createCourse, "POST", createCourseData);
     return response;
   };
