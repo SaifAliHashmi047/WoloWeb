@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUserData, setUserLogin } from "../redux/userDataSlice";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"; // Import the eye icons
+import { GoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -24,6 +25,12 @@ const Login = () => {
       navigate("/");
     }
   }, []);
+  const responseMessage = (response) => {
+    console.log(response);
+  };
+  const errorMessage = (error) => {
+    console.log(error);
+  };
 
   const postLogin = async (email, password, userType) => {
     const loginData = {
@@ -174,6 +181,7 @@ const Login = () => {
               Login
             </button>
           )}
+          <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
           <div className="w-full flex justify-center">
             <TailSpin
               visible={loadingLocal}
