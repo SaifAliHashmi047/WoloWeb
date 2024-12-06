@@ -171,6 +171,9 @@ const Login = () => {
           if (response?.errorType == "wrong-password") {
             alert("Incorrect email");
             setIsLoading(false);
+          } else if (response?.errorType == "user-not-found") {
+            alert(response?.message);
+            setIsLoading(false);
           }
         }
       }
