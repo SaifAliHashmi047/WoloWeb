@@ -8,7 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUserData, setUserLogin } from "../redux/userDataSlice";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"; // Import the eye icons
-import { GoogleLogin } from "@react-oauth/google";
+import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+import LoadingModal from "../components/LoadingModal";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,6 +21,14 @@ const Login = () => {
   });
   const [loadingLocal, setLoadingLocal] = useState(false);
   const [showPassword, setShowPassword] = useState(false); // State for password visibility
+  const [user, setUser] = useState(null);
+  const [profile, setProfile] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const socialLogin = useGoogleLogin({
+    onSuccess: (codeResponse) => setUser(codeResponse),
+    onError: (error) => console.log("Login Failed:", error),
+  });
 
   useEffect(() => {
     if (localStorage.getItem("userLoggedIN")) {
@@ -118,6 +128,81 @@ const Login = () => {
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
+  const callSocialLoginAPI = async (data) => {
+    setIsLoading(true);
+    const socailLoginData = {
+      email: data?.email,
+      role: "Tutor",
+      name: data?.name,
+      device: {
+        id: "deviceId",
+        deviceToken: "deviceToken",
+      },
+    };
+    try {
+      console.log("socailLoginData => ", socailLoginData);
+      const response = await callApi(api?.socialLogin, "POST", socailLoginData);
+      if (response !== undefined) {
+        if (response?.status === 201 || response?.status === 200) {
+          dispatch(setUserData(response?.data?.user));
+          dispatch(setUserLogin(true));
+
+          console?.log(
+            "-------_-__-_--_---------->",
+            JSON?.stringify(response?.data?.refreshToken, null, 2)
+          );
+          localStorage.setItem("userLoggedIN", true);
+          localStorage.setItem(
+            "userData",
+            JSON.stringify(response?.data?.user)
+          );
+          localStorage.setItem(
+            "accessToken",
+            JSON.stringify(response?.data?.token)
+          );
+          localStorage.setItem(
+            "refreshToken",
+            JSON.stringify(response?.data?.refreshToken)
+          );
+          setIsLoading(false);
+          navigate("/");
+        } else {
+          if (response?.errorType == "wrong-password") {
+            alert("Incorrect email");
+            setIsLoading(false);
+          }
+        }
+      }
+    } catch (error) {
+      console?.log("-----_-__-------_>", error);
+      setIsLoading(false);
+    } finally {
+      setLoadingLocal(false);
+      setIsLoading(false);
+      console?.log("-----_-__-------_>");
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      axios
+        .get(
+          `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user?.access_token}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user?.access_token}`,
+              Accept: "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          console?.log("-------->>>", res?.data);
+          setProfile(res.data);
+          callSocialLoginAPI(res?.data);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [user]);
 
   return (
     <div className="container mx-auto p-4 w-full min-h-fit flex flex-col items-center pb-24">
@@ -181,7 +266,7 @@ const Login = () => {
               Login
             </button>
           )}
-          <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
+          {/* <GoogleLogin onSuccess={responseMessage} onError={errorMessage} /> */}
           <div className="w-full flex justify-center">
             <TailSpin
               visible={loadingLocal}
@@ -195,7 +280,19 @@ const Login = () => {
             />
           </div>
         </form>
+        <button
+          className="w-full p-3 rounded-full font-semibold transition duration-200 flex flex-row justify-center items-center border-grey border-2"
+          onClick={socialLogin}
+        >
+          {" "}
+          <img
+            src={"../../src/assets/GooglePay.png"}
+            className="h-6 w-6 mx-4"
+          />
+          Sign in with Google{" "}
+        </button>
       </div>
+      <LoadingModal isLoading={isLoading} />
     </div>
   );
 };
