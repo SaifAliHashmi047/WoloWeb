@@ -133,6 +133,7 @@ const Login = () => {
     const socailLoginData = {
       email: data?.email,
       role: "Tutor",
+      isWeb: true,
       name: data?.name,
       device: {
         id: "deviceId",
