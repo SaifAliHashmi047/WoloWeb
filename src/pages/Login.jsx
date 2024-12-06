@@ -290,7 +290,7 @@ const Login = () => {
               backgroundSize: "cover", // Or "contain" based on your preference
               backgroundPosition: "center",
             }}
-            src={"../../src/GooglePay.png"}
+            src={"public/GooglePay.png"}
             className="h-6 w-6 mx-4"
           />
           Sign in with Google{" "}
