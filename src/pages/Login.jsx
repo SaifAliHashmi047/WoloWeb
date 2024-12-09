@@ -43,13 +43,17 @@ const Login = () => {
   };
 
   const postLogin = async (email, password, userType) => {
+    const timeStamp1 = Date.now();
+    const timeStamp2 = Date.now();
+    localStorage.setItem("timeStamp1", timeStamp1);
+    localStorage.setItem("timeStamp2", timeStamp2);
     const loginData = {
       email: String(email).trim().toLowerCase(),
       role: "Tutor",
       password: password,
       device: {
-        id: "deviceId",
-        deviceToken: "deviceToken",
+        id: timeStamp1,
+        deviceToken: timeStamp2,
       },
     };
     const response = await callApi(
@@ -130,14 +134,18 @@ const Login = () => {
   };
   const callSocialLoginAPI = async (data) => {
     setIsLoading(true);
+    const timeStamp1 = Date.now();
+    const timeStamp2 = Date.now();
+    localStorage.setItem("timeStamp1", timeStamp1);
+    localStorage.setItem("timeStamp2", timeStamp2);
     const socailLoginData = {
       email: data?.email,
       role: "Tutor",
       isWeb: true,
       name: data?.name,
       device: {
-        id: "deviceId",
-        deviceToken: "deviceToken",
+        id: timeStamp1,
+        deviceToken: timeStamp2,
       },
     };
     try {

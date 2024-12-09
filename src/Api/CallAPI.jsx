@@ -20,6 +20,7 @@ export const Status = {
 
 export const callApi = async (url, method, data, formData) => {
   const accessToken = JSON.parse(localStorage?.getItem("accessToken"));
+
   console?.log("----------------------------------------_>", accessToken);
   const headers = { Accept: "application/json" };
   if (accessToken) {
@@ -68,10 +69,12 @@ export const callApi = async (url, method, data, formData) => {
 const refreshAuthToken = async () => {
   const accessToken = JSON.parse(localStorage?.getItem("accessToken"));
   const refreshToken = JSON.parse(localStorage?.getItem("refreshToken"));
+  const timeStamp1 = JSON.parse(localStorage?.getItem("timeStamp1"));
+  const timeStamp2 = JSON.parse(localStorage?.getItem("timeStamp2"));
   console?.log("----------------->AccessRes", accessToken);
   let device = {};
-  device["id"] = "deviceId";
-  device["deviceToken"] = "deviceToken";
+  device["id"] = timeStamp1;
+  device["deviceToken"] = timeStamp2;
   console.log("device => ", device);
   try {
     const headerss = { Accept: "application/json" };
