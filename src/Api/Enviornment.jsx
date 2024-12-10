@@ -1,5 +1,5 @@
-export const BASE_URL = "https://api.woloafric.com/";
-// export const BASE_URL = "http://192.168.0.42:4700/";
+// export const BASE_URL = "https://api.woloafric.com/";
+export const BASE_URL = "http://192.168.0.42:4700/";
 
 export const api = {
   // auth

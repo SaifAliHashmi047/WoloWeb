@@ -39,9 +39,11 @@ export const callApi = async (url, method, data, formData) => {
     });
     return response?.data;
   } catch (error) {
+    console?.log("--------___-_--__>", error?.response);
     if (
       error?.response?.data?.message === "jwt expired" ||
-      error?.response?.data?.message === "Token has expired."
+      error?.response?.data?.message === "Token has expired." ||
+      error?.response?.status == 401
     ) {
       try {
         const refreshedToken = await refreshAuthToken();
@@ -61,7 +63,6 @@ export const callApi = async (url, method, data, formData) => {
       }
     } else {
       console.log("eerorr => ", error?.response?.data);
-      // throw error;
       return error?.response?.data;
     }
   }

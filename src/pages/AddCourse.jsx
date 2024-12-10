@@ -196,50 +196,67 @@ const AddCourse = () => {
   };
 
   const handleCourseAdd = async () => {
-    setIsLoading(true);
-    if (course?.courses == null) {
-      setFlash({
-        message: "Please save course basic details to proceed ",
-        type: "error",
-      });
-      setIsLoading(false);
-      return false;
-    }
-    if (course?.modules.length < 1) {
-      setFlash({
-        message: "Please save course modules to proceed ",
-        type: "error",
-      });
-      setIsLoading(false);
-      return false;
-    }
-    if (course?.agoraSessions == null) {
-      setFlash({
-        message: "Please save your availability to proceed ",
-        type: "error",
-      });
-      setIsLoading(false);
-      return false;
-    }
-
-    const response = await callSaveCourseAPI();
-    console.log("Resposeee => ", response);
-    setIsLoading(false);
-    if (response !== undefined) {
-      if (response?.status === 201 || response?.status === 200) {
-        if (response?.success) {
-          setFlash({
-            message: "Course created successfully",
-            type: "success",
-          });
-          navigation(-1);
-        }
-      } else {
+    try {
+      setIsLoading(true);
+      if (course?.courses == null) {
         setFlash({
-          message: "Session expired please login again",
+          message: "Please save course basic details to proceed ",
           type: "error",
         });
+        setIsLoading(false);
+        return false;
       }
+      if (course?.modules.length < 1) {
+        setFlash({
+          message: "Please save course modules to proceed ",
+          type: "error",
+        });
+        setIsLoading(false);
+        return false;
+      }
+      if (course?.agoraSessions == null) {
+        setFlash({
+          message: "Please save your availability to proceed ",
+          type: "error",
+        });
+        setIsLoading(false);
+        return false;
+      }
+
+      const response = await callSaveCourseAPI();
+      console.log("Resposeee => ", response);
+      setIsLoading(false);
+      if (response !== undefined) {
+        if (response?.status === 201 || response?.status === 200) {
+          if (response?.success) {
+            setFlash({
+              message: "Course created successfully",
+              type: "success",
+            });
+            navigation(-1);
+          }
+        } else {
+          setIsLoading(false);
+          console?.log("---------RES----_>", response);
+
+          setFlash({
+            message: "Something went wrong please try again",
+            type: "error",
+          });
+        }
+      } else {
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console?.log("-----_-__-------_>", error?.response?.data?.message);
+      setFlash({
+        message: error?.response?.data?.message,
+        type: "error",
+      });
+      setIsLoading(false);
+      setTimeout(() => {
+        navigation(-1);
+      }, 1500);
     }
   };
 
