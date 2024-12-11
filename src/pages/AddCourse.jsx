@@ -120,7 +120,7 @@ const AddCourse = () => {
     }
     if (courseData.tags?.length < 1) {
       // alert("Please enter a valid course title");
-      setFlash({ message: "Please enter a valid course title", type: "error" });
+      setFlash({ message: "Please add atleast one course tag", type: "error" });
       return;
     }
     if (courseData.category?.name?.length < 2) {
@@ -178,10 +178,14 @@ const AddCourse = () => {
       message: "Course Basic Details Saved successfully!",
       type: "success",
     });
-    setCourse((prev) => ({
-      ...prev,
-      courses: courseData,
-    }));
+    let courseNew = courseData;
+    courseNew.image = imageUrl;
+    setTimeout(() => {
+      setCourse((prev) => ({
+        ...prev,
+        courses: courseNew,
+      }));
+    }, 1000);
   };
 
   const fileUploadUrl = async (file) => {
@@ -222,7 +226,14 @@ const AddCourse = () => {
         setIsLoading(false);
         return false;
       }
-
+      const createCourseData = {
+        courses: course?.courses,
+        modules: course?.modules,
+        resources: course?.resources ? course?.resources : [],
+        sessions: course?.sessions ? course?.sessions : [],
+        agoraSession: course?.agoraSessions ? course?.agoraSessions : {},
+      };
+      console?.log("--------------_>", createCourseData);
       const response = await callSaveCourseAPI();
       console.log("Resposeee => ", response);
       setIsLoading(false);
